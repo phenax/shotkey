@@ -92,8 +92,8 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
       }
     }
   } else {
-    // TODO: Check and execute the mode
     if (modes[current_mode] && current_mode < MODE_SIZE) {
+      // Check if key is in mode and execute
       for (i = 0; i < LENGTH(modes[current_mode]); i++) {
         mode_key = modes[current_mode][i];
 
@@ -101,9 +101,13 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
           run(dpy, win, mode_key.command);
         }
       }
-    }
 
-    // TODO: Unbind mode keys
+      // Unbind mode related keys
+      for (i = 0; i < LENGTH(modes[current_mode]); i++) {
+        mode_key = modes[current_mode][i];
+        unbind_key(dpy, win, keys[i].mod, keys[i].key);
+      }
+    }
 
     current_mode = -1;
   }
