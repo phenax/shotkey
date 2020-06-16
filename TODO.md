@@ -1,6 +1,7 @@
 # TODO
   - [ ] Some magic helpers for clean config
-  - [ ] Add modes
+  - [X] Add modes
+  - [ ] Abstract normal mode as just another mode
   - [ ] Get current mode from cli
   - [ ] KeyPress and KeyRelease options
   - [ ] Document stuff
