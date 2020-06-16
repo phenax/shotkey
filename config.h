@@ -1,10 +1,10 @@
 // Shell
 static char shell[] = "sh";
 
-#define MOD Mod1Mask|ShiftMask
+#define MOD Mod1Mask
 
 static Key keys[] = {
-  { MOD,  XK_y, "notify-send hello" },
-  { MOD,  XK_z, "~/scripts/notify.sh wow" },
+  { MOD|ShiftMask, XK_y,   "notify-send hello" },
+  { MOD|ShiftMask, XK_z,   "~/scripts/notify.sh wow" },
 };
 
