@@ -59,12 +59,9 @@ void run(Display* dpy, Window win, Command command) {
   unsigned int i;
 
   if (command.command) {
-    printf("Running cmd %s\n", command.command);
     char* cmd[] = {shell, "-c", command.command, NULL};
     spawn(cmd);
   } else if(command.mode != -1) {
-    printf("Enabling mode %d\n", command.mode);
-
     current_mode = command.mode;
 
     if (modes[current_mode] && current_mode < MODE_SIZE) {
@@ -73,8 +70,9 @@ void run(Display* dpy, Window win, Command command) {
         bind_key(dpy, win, keys[i].mod, keys[i].key);
       }
     }
-    // TODO: Bind keys associated with mode
-    // TODO: Bind Escape
+
+    // Bind an escape key to quit mode
+    bind_key(dpy, win, 0, XK_Escape);
   }
 }
 
@@ -83,9 +81,8 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
   Key mode_key;
   KeySym keysym = XKeycodeToKeysym(dpy, (KeyCode) ev->keycode, 0);
 
-  printf("kpress\n");
-
   if (current_mode == -1) {
+    // Bind all the normal mode keys
     for (i = 0; i < LENGTH(keys); i++) {
       if (keysym == keys[i].key && CLEANMASK(keys[i].mod) == CLEANMASK(ev->state)) {
         run(dpy, win, keys[i].command);
@@ -105,8 +102,11 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
       // Unbind mode related keys
       for (i = 0; i < LENGTH(modes[current_mode]); i++) {
         mode_key = modes[current_mode][i];
-        unbind_key(dpy, win, keys[i].mod, keys[i].key);
+        unbind_key(dpy, win, mode_key.mod, mode_key.key);
       }
+
+      // Unbind escape key
+      unbind_key(dpy, win, 0, XK_Escape);
     }
 
     current_mode = -1;
@@ -135,6 +135,7 @@ int main() {
 	  switch (ev.type) {
       case KeyPress: {
         keypress(dpy, root, &ev.xkey);
+        break;
       }
     }
   }
