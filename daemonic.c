@@ -1,6 +1,8 @@
 #include<stdio.h>
+#include <stdlib.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <unistd.h>
 
 typedef struct Key {
   unsigned int mod;
@@ -28,6 +30,21 @@ int error_handler(Display *disp, XErrorEvent *xe) {
   return 1;
 }
 
+void spawn(char ** command) {
+	if (fork() == 0) {
+		setsid();
+		execvp(command[0], command);
+		fprintf(stderr, "dwm: execvp %s", command[0]);
+		perror(" failed");
+		exit(0);
+	}
+}
+
+void run(char *command) {
+  char* cmd[] = {shell, "-c", command, NULL};
+  spawn(cmd);
+}
+
 void keypress(Display *dpy, XKeyEvent *ev) {
   unsigned int i;
   KeySym keysym = XKeycodeToKeysym(dpy, (KeyCode) ev->keycode, 0);
@@ -35,9 +52,11 @@ void keypress(Display *dpy, XKeyEvent *ev) {
   for (i = 0; i < LENGTH(keys); i++) {
     if (keysym == keys[i].key && CLEANMASK(keys[i].mod) == CLEANMASK(ev->state) && keys[i].command) {
       printf("Executin: %s\n", keys[i].command);
+      run(keys[i].command);
     }
   }
 }
+
 
 int main() {
   XSetErrorHandler(error_handler);
@@ -52,6 +71,8 @@ int main() {
   for (i = 0; i < LENGTH(keys); i++) {
     bind_key(dpy, root, keys[i].mod, keys[i].key);
   }
+
+  /*spawn({"sh", "-c", "~/scripts/notify.sh 'wow'"});*/
 
   XSelectInput(dpy, root, KeyPressMask);
 
