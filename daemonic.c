@@ -7,6 +7,7 @@
 typedef struct Command {
   char* command;
   unsigned int mode;
+  int persist;
 } Command;
 
 typedef struct Key {
@@ -15,8 +16,8 @@ typedef struct Key {
   Command command;
 } Key;
 
-#define cmd(c)  (Command) { c,    -1 }
-#define mode(m) (Command) { NULL, m }
+#define cmd(c)      (Command) { c,    -1, False }
+#define mode(m, p)  (Command) { NULL, m,  p }
 
 #include "config.h"
 
@@ -24,6 +25,7 @@ typedef struct Key {
 #define CLEANMASK(mask) (mask & ~LockMask & (ShiftMask|ControlMask|Mod1Mask|Mod2Mask|Mod3Mask|Mod4Mask|Mod5Mask))
 
 int current_mode = -1;
+int is_mode_persistent = 0;
 
 void bind_key(Display *dpy, Window win, unsigned int mod, KeySym key) {
   int keycode = XKeysymToKeycode(dpy, key);
@@ -63,6 +65,7 @@ void run(Display* dpy, Window win, Command command) {
     spawn(cmd);
   } else if(command.mode != -1) {
     current_mode = command.mode;
+    is_mode_persistent = command.persist;
 
     if (modes[current_mode] && current_mode < MODE_SIZE) {
       for (i = 0; i < LENGTH(modes[current_mode]); i++) {
@@ -89,6 +92,9 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
       }
     }
   } else {
+    // Escape key
+    is_mode_persistent = is_mode_persistent && ev->keycode != 9;
+
     if (modes[current_mode] && current_mode < MODE_SIZE) {
       // Check if key is in mode and execute
       for (i = 0; i < LENGTH(modes[current_mode]); i++) {
@@ -99,17 +105,22 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
         }
       }
 
-      // Unbind mode related keys
-      for (i = 0; i < LENGTH(modes[current_mode]); i++) {
-        mode_key = modes[current_mode][i];
-        unbind_key(dpy, win, mode_key.mod, mode_key.key);
-      }
+      if (!is_mode_persistent) {
+        // Unbind mode related keys
+        for (i = 0; i < LENGTH(modes[current_mode]); i++) {
+          mode_key = modes[current_mode][i];
+          unbind_key(dpy, win, mode_key.mod, mode_key.key);
+        }
 
-      // Unbind escape key
-      unbind_key(dpy, win, 0, XK_Escape);
+        // Unbind escape key
+        unbind_key(dpy, win, 0, XK_Escape);
+      }
     }
 
-    current_mode = -1;
+    if (!is_mode_persistent) {
+      current_mode = -1;
+      is_mode_persistent = False;
+    }
   }
 }
 
