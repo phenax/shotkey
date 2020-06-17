@@ -18,8 +18,8 @@ static Key modes[MODE_SIZE][10] = {
     { 0, XK_m,   cmd("notify-send inside_music") },
   },
   [Bright] = {
-    { 0, XK_m,      cmd("notify-send inside_bright") },
-    { 0, XK_n,      cmd("notify-send inside_bright_1") },
+    { 0, XK_m,   cmd("notify-send inside_bright") },
+    { 0, XK_n,   cmd("notify-send inside_bright_1") },
   },
 };
 

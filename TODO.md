@@ -1,8 +1,7 @@
 # TODO
   - [ ] Some magic helpers for clean config
   - [X] Add modes
-  - [ ] Persistent mode
-  - [ ] Abstract normal mode as just another mode
+  - [X] Persistent mode
   - [ ] Get current mode from cli
   - [ ] Hook for mode change
   - [ ] KeyPress and KeyRelease options
