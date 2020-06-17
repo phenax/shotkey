@@ -17,11 +17,11 @@ enum {
 // Define mode key bindings here
 // NOTE: "10" here is the maximum number of key bindings for each mode
 static Key modes[MODE_SIZE][10] = {
-  [MusicPlayer] = {
+  [MusicPlayer] = { // {{{
     { 0, XK_l,        SCRIPT(spotify.sh next) },
     { 0, XK_h,        SCRIPT(spotify.sh prev) },
     { 0, XK_space,    SCRIPT(spotify.sh play_pause) },
-  },
+  },// }}}
 };
 
 // Define normal mode key bindings here
@@ -73,5 +73,5 @@ static ModeProperties mode_properties[MODE_SIZE] = {
 };
 
 // Call this script on mode change
-static char* on_mode_change = "echo 1";
+static char* on_mode_change = "~/scripts/hotkeythingy.sh on-mode-change";
 
