@@ -1,5 +1,5 @@
 // Shell
-static char shell[] = "sh";
+static char shell[] = "/bin/sh";
 
 #define MOD Mod1Mask
 
@@ -34,4 +34,6 @@ static ModeProperties mode_properties[MODE_SIZE] = {
   [Music] = { "Music player" },
   [Bright] = { "Brightness" },
 };
+
+static char* on_mode_change = "notify-send \"kadj [$MODE_ID] $MODE_LABEL\"";
 

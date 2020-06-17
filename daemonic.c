@@ -1,5 +1,6 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <unistd.h>
@@ -52,14 +53,43 @@ int error_handler(Display *disp, XErrorEvent *xe) {
   return 1;
 }
 
+void spawn_with_env(char** command, char** env) {
+	if (fork() == 0) {
+		setsid();
+		execve(command[0], command, env);
+		fprintf(stderr, "daemonic: execvp %s", command[0]);
+		perror(" failed");
+		exit(0);
+	}
+}
+
 void spawn(char ** command) {
 	if (fork() == 0) {
 		setsid();
 		execvp(command[0], command);
-		fprintf(stderr, "dwm: execvp %s", command[0]);
+		fprintf(stderr, "daemonic: execvp %s", command[0]);
 		perror(" failed");
 		exit(0);
 	}
+}
+
+char* get_mode_label() {
+  if (current_mode == -1) return "";
+  ModeProperties props = mode_properties[current_mode];
+  return props.label;
+}
+
+extern char** environ;
+void handle_mode_change() {
+  char str[255];
+  sprintf(str, "%d", current_mode);
+  setenv("MODE_ID", str, 1);
+
+  char* label = get_mode_label();
+  setenv("MODE_LABEL", label, 1);
+
+  char* cmd[] = {shell, "-c", on_mode_change, NULL};
+  spawn_with_env(cmd, environ);
 }
 
 void run(Display* dpy, Window win, Command command) {
@@ -82,6 +112,8 @@ void run(Display* dpy, Window win, Command command) {
 
     // Bind an escape key to quit mode
     bind_key(dpy, win, 0, XK_Escape);
+
+    handle_mode_change();
   }
 }
 
@@ -126,14 +158,9 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
     if (!is_mode_persistent) {
       current_mode = -1;
       is_mode_persistent = False;
+      handle_mode_change();
     }
   }
-}
-
-char* get_mode_label() {
-  if (current_mode == -1) return "";
-  ModeProperties props = mode_properties[current_mode];
-  return props.label;
 }
 
 void help_menu(char* x) {
@@ -142,7 +169,7 @@ void help_menu(char* x) {
 
 int main(int argc, char *argv[]) {
   int opt;
-  while ((opt = getopt(argc, argv, "vh")) != -1) {
+  while (argc > 1 && (opt = getopt(argc, argv, "vh")) != -1) {
     switch (opt) {
       case 'v': printf("%s\n", VERSION); return 0;
       /*case 'm': printf("%s\n", get_mode_label()); return 0;*/
@@ -166,6 +193,8 @@ int main(int argc, char *argv[]) {
   }
 
   XSelectInput(dpy, root, KeyPressMask);
+
+  handle_mode_change();
 
 	/* main event loop */
   XEvent ev;
