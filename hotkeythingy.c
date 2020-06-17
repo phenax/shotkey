@@ -46,9 +46,10 @@ void unbind_key(Display *dpy, Window win, unsigned int mod, KeySym key) {
 }
 
 int error_handler(Display *disp, XErrorEvent *xe) {
-  if (xe->error_code == BadAccess) {
-    printf("hotkeythingy: [BadAccess] Cant grab key binding. Already grabbed\n");
-    return 0;
+  switch(xe->error_code) {
+    case BadAccess:
+      printf("hotkeythingy: [BadAccess] Cant grab key binding. Already grabbed\n");
+      return 0;
   }
 
   printf("hotkeythingy: Something went wrong\n");
@@ -67,6 +68,7 @@ void spawn(char** command) {
 
 char* get_mode_label() {
   if (current_mode == NormalMode) return "";
+  if (LENGTH(mode_properties) <= current_mode) return "";
   ModeProperties props = mode_properties[current_mode];
   return props.label;
 }
