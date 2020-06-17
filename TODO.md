@@ -4,8 +4,10 @@
   - [X] Persistent mode
   - [X] Get current mode
   - [X] Hook for mode change
-  - [ ] KeyPress and KeyRelease options
-  - [ ] Document stuff
+  - [X] Document stuff
   - [ ] Clean up build system
   - [ ] Fix installation
-  - [ ] Create man page
+  - [X] Create man page
+
+# Patches
+  - [ ] KeyPress and KeyRelease options

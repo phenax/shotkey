@@ -1,0 +1,115 @@
+.TH HOTKEYTHINGY 1 dwm\-VERSION
+.SH NAME
+hotkeythingy \- A suckless hot key daemon thingy with modes and stuff
+.SH SYNOPSIS
+.B hotkeythingy
+.RB [ \-vh ]
+.SH DESCRIPTION
+A suckless hot key daemon thingy with mode and stuffs.
+.P
+You can cofigure your key bindings, modes and other shit inside `config.h`.
+
+.SH OPTIONS
+.TP
+.B \-v
+(optional) Prints version information to standard output, then exits.
+.TP
+.B \-h
+(optional) Prints help menu and exits
+
+
+.SH USAGE
+
+.SS config.h
+
+.TP
+.B shell
+The shell to use to execute the commands.
+
+
+.TP
+.B keys
+This is where you declare the list of key bindings.
+Examples -
+.B Super+d
+opens dmenu_run;
+.B Super+m
+enters VolumeControl mode;
+.B Super+l
+enters Layout mode and quits mode after the next key press
+
+.EX
+static Key keys[] = {
+  { Mod4Mask,  XK_d, cmd("dmenu_run") },
+  { Mod4Mask,  XK_m, mode(VolumeControl, True) },
+  { Mod4Mask,  XK_l, mode(Layout, False) },
+};
+.EE
+
+
+.TP
+.B modes
+This is where you define the key bindings inside your modes
+
+Once you are in volume control mode, (with persist: True), you can use j and k to increase/decrease the volume and then when you're done, press Escape to go back to normal mode.
+
+Once you are in Layout mode, (with persist: False), you can use t or m to set the layout to tiled/monocle and then immedietely quit out of the mode and go back to normal mode.
+
+.EX
+enum {
+  VolumeControl,
+  Layout,
+
+  // Declare modes above this
+  MODE_SIZE, // NOTE: Do not remove this
+};
+
+static Key modes[MODE_SIZE][10] = {
+  [VolumeControl] = {
+    { 0, XK_j, cmd("amixer sset Master '5%-'") },
+    { 0, XK_k, cmd("amixer sset Master '5%+'") },
+  },
+  [Layout] = {
+    { 0, XK_t, cmd("dwmc setlayoutex 0") },
+    { 0, XK_m, cmd("dwmc setlayoutex 2") },
+  },
+};
+.EE
+
+
+.TP
+.B mode_properties
+This list lets you set a label to your modes (Useful for
+.B on_mode_change
+hook)
+
+
+.TP
+.B on_mode_change
+This option allows you to run a script on every layout change.
+It will provide the following environment variables for scripting.
+
+.B MODE_ID
+This is the `index` of the mode. Normal mode is `-1`.
+
+.B MODE_LABEL
+This is the label assigned to a mode inside mode_properties
+
+
+
+
+.SH CUSTOMIZATION
+You can cofigure your key bindings, modes and other shit inside `config.h`.
+This keeps it fast, secure and simple.
+
+
+.SH BUGS
+Report issues to https://github.com/phenax/hotkeythingy/issues
+.SH AUTHOR
+.MT phenax5@gmail.com
+Akshay Nair
+.ME
+.SH LINKS
+.UR https://github.com/phenax/hotkeythingy
+Homepage
+.UE
