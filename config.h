@@ -60,7 +60,7 @@ static Key keys[] = {
   // }}}
 
   // Media controls {{{
-  { Super,                      XK_m,                        mode(MusicPlayer, False) },
+  { Super,                      XK_m,                        mode(MusicPlayer, True) },
   { 0,                          XF86XK_AudioRaiseVolume,     SCRIPT(sound.sh volume up) },
   { 0,                          XF86XK_AudioLowerVolume,     SCRIPT(sound.sh volume down) },
   { 0,                          XF86XK_AudioMute,            SCRIPT(sound.sh mute) },
