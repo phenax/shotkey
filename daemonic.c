@@ -67,7 +67,7 @@ void run(Display* dpy, Window win, Command command) {
     if (modes[current_mode] && current_mode < MODE_SIZE) {
       for (i = 0; i < LENGTH(modes[current_mode]); i++) {
         mode_key = modes[current_mode][i];
-        bind_key(dpy, win, keys[i].mod, keys[i].key);
+        bind_key(dpy, win, mode_key.mod, mode_key.key);
       }
     }
 
