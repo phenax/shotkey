@@ -86,6 +86,12 @@ void handle_mode_change() {
   spawn(cmd);
 }
 
+void set_mode(int mode, unsigned int persist) {
+    current_mode = mode;
+    is_mode_persistent = persist;
+    handle_mode_change();
+}
+
 void run(Display* dpy, Window win, Command command) {
   Key mode_key;
   unsigned int i;
@@ -94,20 +100,14 @@ void run(Display* dpy, Window win, Command command) {
     char* cmd[] = {shell, "-c", command.command, NULL};
     spawn(cmd);
   } else if(command.mode != NormalMode) {
-    current_mode = command.mode;
-    is_mode_persistent = command.persist;
-
-    if (current_mode < LENGTH(modes) && modes[current_mode]) {
-      for (i = 0; i < LENGTH(modes[current_mode]); i++) {
-        mode_key = modes[current_mode][i];
-        bind_key(dpy, win, mode_key.mod, mode_key.key);
-      }
-    }
+    // Bind keyboard for mode
+    XGrabKeyboard(dpy, win, False, GrabModeAsync, GrabModeAsync, CurrentTime);
 
     // Bind an escape key to quit mode
     bind_key(dpy, win, 0, XK_Escape);
 
-    handle_mode_change();
+    // Set mode
+    set_mode(command.mode, command.persist);
   }
 }
 
@@ -139,10 +139,7 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
 
       if (!is_mode_persistent) {
         // Unbind mode related keys
-        for (i = 0; i < LENGTH(modes[current_mode]); i++) {
-          mode_key = modes[current_mode][i];
-          unbind_key(dpy, win, mode_key.mod, mode_key.key);
-        }
+        XUngrabKeyboard(dpy, CurrentTime);
 
         // Unbind escape key
         unbind_key(dpy, win, 0, XK_Escape);
@@ -150,9 +147,7 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
     }
 
     if (!is_mode_persistent) {
-      current_mode = NormalMode;
-      is_mode_persistent = False;
-      handle_mode_change();
+      set_mode(NormalMode, False);
     }
   }
 }
