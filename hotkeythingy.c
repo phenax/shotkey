@@ -5,8 +5,6 @@
 #include <X11/Xutil.h>
 #include <unistd.h>
 
-#define VERSION "0.0.1"
-
 typedef struct Command {
   char* command;
   unsigned int mode;
@@ -49,11 +47,11 @@ void unbind_key(Display *dpy, Window win, unsigned int mod, KeySym key) {
 
 int error_handler(Display *disp, XErrorEvent *xe) {
   if (xe->error_code == BadAccess) {
-    printf("daemonic: [BadAccess] Cant grab key binding. Already grabbed\n");
+    printf("hotkeythingy: [BadAccess] Cant grab key binding. Already grabbed\n");
     return 0;
   }
 
-  printf("daemonic: Something went wrong\n");
+  printf("hotkeythingy: Something went wrong\n");
   return 1;
 }
 
@@ -61,7 +59,7 @@ void spawn(char** command) {
 	if (fork() == 0) {
 		setsid();
 		execve(command[0], command, environ);
-		fprintf(stderr, "daemonic: execve %s", command[0]);
+		fprintf(stderr, "hotkeythingy: execve %s", command[0]);
 		perror(" failed");
 		exit(0);
 	}
@@ -157,23 +155,7 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
   }
 }
 
-void help_menu(char* x) {
-  printf("Usage: %s [-vh]\n", x);
-}
-
-int main(int argc, char *argv[]) {
-  int opt;
-  while (argc > 1 && (opt = getopt(argc, argv, "vh")) != NormalMode) {
-    switch (opt) {
-      case 'v': printf("%s\n", VERSION); return 0;
-      /*case 'm': printf("%s\n", get_mode_label()); return 0;*/
-      case 'h':
-      default:
-        help_menu(argv[0]);
-        return opt != 'h';
-    }
-  }
-
+int main() {
   XSetErrorHandler(error_handler);
 
   int running = 1, i = 0;
