@@ -23,16 +23,20 @@ typedef struct ModeProperties {
   char* label;
 } ModeProperties;
 
-#define cmd(c)      (Command) { c,    -1, False }
-#define mode(m, p)  (Command) { NULL, m,  p }
+#define NormalMode -1
+
+#define cmd(c)      (Command) { c,     NormalMode,  False }
+#define mode(m, p)  (Command) { NULL,  m,           p }
 
 #include "config.h"
 
 #define LENGTH(X) (sizeof X / sizeof X[0])
 #define CLEANMASK(mask) (mask & ~LockMask & (ShiftMask|ControlMask|Mod1Mask|Mod2Mask|Mod3Mask|Mod4Mask|Mod5Mask))
 
-int current_mode = -1;
+int current_mode = NormalMode;
 int is_mode_persistent = 0;
+
+extern char** environ;
 
 void bind_key(Display *dpy, Window win, unsigned int mod, KeySym key) {
   int keycode = XKeysymToKeycode(dpy, key);
@@ -53,43 +57,33 @@ int error_handler(Display *disp, XErrorEvent *xe) {
   return 1;
 }
 
-void spawn_with_env(char** command, char** env) {
+void spawn(char** command) {
 	if (fork() == 0) {
 		setsid();
-		execve(command[0], command, env);
-		fprintf(stderr, "daemonic: execvp %s", command[0]);
-		perror(" failed");
-		exit(0);
-	}
-}
-
-void spawn(char ** command) {
-	if (fork() == 0) {
-		setsid();
-		execvp(command[0], command);
-		fprintf(stderr, "daemonic: execvp %s", command[0]);
+		execve(command[0], command, environ);
+		fprintf(stderr, "daemonic: execve %s", command[0]);
 		perror(" failed");
 		exit(0);
 	}
 }
 
 char* get_mode_label() {
-  if (current_mode == -1) return "";
+  if (current_mode == NormalMode) return "";
   ModeProperties props = mode_properties[current_mode];
   return props.label;
 }
 
-extern char** environ;
 void handle_mode_change() {
   char str[255];
+
   sprintf(str, "%d", current_mode);
   setenv("MODE_ID", str, 1);
 
-  char* label = get_mode_label();
-  setenv("MODE_LABEL", label, 1);
+  sprintf(str, "%s", get_mode_label());
+  setenv("MODE_LABEL", str, 1);
 
   char* cmd[] = {shell, "-c", on_mode_change, NULL};
-  spawn_with_env(cmd, environ);
+  spawn(cmd);
 }
 
 void run(Display* dpy, Window win, Command command) {
@@ -99,7 +93,7 @@ void run(Display* dpy, Window win, Command command) {
   if (command.command) {
     char* cmd[] = {shell, "-c", command.command, NULL};
     spawn(cmd);
-  } else if(command.mode != -1) {
+  } else if(command.mode != NormalMode) {
     current_mode = command.mode;
     is_mode_persistent = command.persist;
 
@@ -122,7 +116,7 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
   Key mode_key;
   KeySym keysym = XKeycodeToKeysym(dpy, (KeyCode) ev->keycode, 0);
 
-  if (current_mode == -1) {
+  if (current_mode == NormalMode) {
     // Bind all the normal mode keys
     for (i = 0; i < LENGTH(keys); i++) {
       if (keysym == keys[i].key && CLEANMASK(keys[i].mod) == CLEANMASK(ev->state)) {
@@ -156,7 +150,7 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
     }
 
     if (!is_mode_persistent) {
-      current_mode = -1;
+      current_mode = NormalMode;
       is_mode_persistent = False;
       handle_mode_change();
     }
@@ -169,7 +163,7 @@ void help_menu(char* x) {
 
 int main(int argc, char *argv[]) {
   int opt;
-  while (argc > 1 && (opt = getopt(argc, argv, "vh")) != -1) {
+  while (argc > 1 && (opt = getopt(argc, argv, "vh")) != NormalMode) {
     switch (opt) {
       case 'v': printf("%s\n", VERSION); return 0;
       /*case 'm': printf("%s\n", get_mode_label()); return 0;*/

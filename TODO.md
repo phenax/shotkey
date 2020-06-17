@@ -2,8 +2,8 @@
   - [ ] Some magic helpers for clean config
   - [X] Add modes
   - [X] Persistent mode
-  - [ ] Get current mode from cli
-  - [ ] Hook for mode change
+  - [X] Get current mode
+  - [X] Hook for mode change
   - [ ] KeyPress and KeyRelease options
   - [ ] Document stuff
   - [ ] Clean up build system

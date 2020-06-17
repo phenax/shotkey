@@ -35,5 +35,6 @@ static ModeProperties mode_properties[MODE_SIZE] = {
   [Bright] = { "Brightness" },
 };
 
+// Call this script on mode change
 static char* on_mode_change = "notify-send \"kadj [$MODE_ID] $MODE_LABEL\"";
 
