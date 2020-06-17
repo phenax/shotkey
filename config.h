@@ -1,7 +1,7 @@
 // Shell
 static char shell[] = "/bin/sh";
 
-#define MOD Mod1Mask
+#define Super Mod1Mask
 
 enum {
   Music,
@@ -25,9 +25,9 @@ static Key modes[MODE_SIZE][10] = {
 
 // Define normal mode key bindings here
 static Key keys[] = {
-  { MOD|ShiftMask, XK_y,   cmd("notify-send hello") },
-  { MOD|ShiftMask, XK_z,   mode(Music, False) },
-  { MOD|ShiftMask, XK_x,   mode(Bright, True) },
+  { Super|ShiftMask, XK_y,   cmd("notify-send hello") },
+  { Super|ShiftMask, XK_z,   mode(Music, False) },
+  { Super|ShiftMask, XK_x,   mode(Bright, True) },
 };
 
 static ModeProperties mode_properties[MODE_SIZE] = {
