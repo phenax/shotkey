@@ -4,6 +4,8 @@
 #include <X11/Xutil.h>
 #include <unistd.h>
 
+#define VERSION "0.0.1"
+
 typedef struct Command {
   char* command;
   unsigned int mode;
@@ -15,6 +17,10 @@ typedef struct Key {
   KeySym key;
   Command command;
 } Key;
+
+typedef struct ModeProperties {
+  char* label;
+} ModeProperties;
 
 #define cmd(c)      (Command) { c,    -1, False }
 #define mode(m, p)  (Command) { NULL, m,  p }
@@ -124,7 +130,29 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
   }
 }
 
-int main() {
+char* get_mode_label() {
+  if (current_mode == -1) return "";
+  ModeProperties props = mode_properties[current_mode];
+  return props.label;
+}
+
+void help_menu(char* x) {
+  printf("Usage: %s [-vh]\n", x);
+}
+
+int main(int argc, char *argv[]) {
+  int opt;
+  while ((opt = getopt(argc, argv, "vh")) != -1) {
+    switch (opt) {
+      case 'v': printf("%s\n", VERSION); return 0;
+      /*case 'm': printf("%s\n", get_mode_label()); return 0;*/
+      case 'h':
+      default:
+        help_menu(argv[0]);
+        return opt != 'h';
+    }
+  }
+
   XSetErrorHandler(error_handler);
 
   int running = 1, i = 0;

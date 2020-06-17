@@ -30,3 +30,8 @@ static Key keys[] = {
   { MOD|ShiftMask, XK_x,   mode(Bright, True) },
 };
 
+static ModeProperties mode_properties[MODE_SIZE] = {
+  [Music] = { "Music player" },
+  [Bright] = { "Brightness" },
+};
+
