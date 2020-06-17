@@ -97,7 +97,7 @@ void run(Display* dpy, Window win, Command command) {
     current_mode = command.mode;
     is_mode_persistent = command.persist;
 
-    if (modes[current_mode] && current_mode < LENGTH(modes)) {
+    if (current_mode < LENGTH(modes) && modes[current_mode]) {
       for (i = 0; i < LENGTH(modes[current_mode]); i++) {
         mode_key = modes[current_mode][i];
         bind_key(dpy, win, mode_key.mod, mode_key.key);
