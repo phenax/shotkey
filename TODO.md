@@ -1,5 +1,5 @@
 # TODO
-  - [ ] Some magic helpers for clean config
+  - [ ] Grab entire keyboard for modes
   - [X] Add modes
   - [X] Persistent mode
   - [X] Get current mode
