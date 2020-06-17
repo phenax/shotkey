@@ -8,7 +8,7 @@ enum {
   Bright,
 
   // Declare modes above this
-  MODE_SIZE, // NOTE: Do not remove this
+  MODE_SIZE,
 };
 
 // Define mode key bindings here

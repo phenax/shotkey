@@ -97,7 +97,7 @@ void run(Display* dpy, Window win, Command command) {
     current_mode = command.mode;
     is_mode_persistent = command.persist;
 
-    if (modes[current_mode] && current_mode < MODE_SIZE) {
+    if (modes[current_mode] && current_mode < LENGTH(modes)) {
       for (i = 0; i < LENGTH(modes[current_mode]); i++) {
         mode_key = modes[current_mode][i];
         bind_key(dpy, win, mode_key.mod, mode_key.key);
@@ -127,7 +127,7 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
     // Escape key
     is_mode_persistent = is_mode_persistent && ev->keycode != 9;
 
-    if (modes[current_mode] && current_mode < MODE_SIZE) {
+    if (modes[current_mode] && current_mode < LENGTH(modes)) {
       // Check if key is in mode and execute
       for (i = 0; i < LENGTH(modes[current_mode]); i++) {
         mode_key = modes[current_mode][i];
@@ -177,7 +177,9 @@ int main() {
 	/* main event loop */
   XEvent ev;
 	XSync(dpy, False);
-	while (running && !XNextEvent(dpy, &ev)) {
+	while (running) {
+    XMaskEvent(dpy, KeyPressMask, &ev);
+
 	  switch (ev.type) {
       case KeyPress: {
         keypress(dpy, root, &ev.xkey);
