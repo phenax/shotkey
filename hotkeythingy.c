@@ -124,8 +124,8 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
       }
     }
   } else {
-    // Escape key
-    is_mode_persistent = is_mode_persistent && ev->keycode != 9;
+    // Will quit if the key pressed is not defined in the mode
+    is_mode_persistent = False;
 
     if (modes[current_mode] && current_mode < LENGTH(modes)) {
       // Check if key is in mode and execute
@@ -133,6 +133,8 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
         mode_key = modes[current_mode][i];
 
         if (keysym == mode_key.key && CLEANMASK(mode_key.mod) == CLEANMASK(ev->state)) {
+          // Action taken so keep the mode alive
+          is_mode_persistent = True;
           run(dpy, win, mode_key.command);
         }
       }
