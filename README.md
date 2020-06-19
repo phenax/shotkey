@@ -14,7 +14,7 @@ sudo make install
 ## Configuring
 You can edit `config.h` to configure key bindings.
 
-* `shell` - Configure the shell
+* `shell` - Configure the shell used for executing the commands
 * `modes` - A mapping defining all mode keys bindings
 * `keys` - All normal mode key bindings
 * `on_mode_change` - Hook script to listen to mode changes. Useful for status bar integration
