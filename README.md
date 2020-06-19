@@ -1,6 +1,7 @@
 # HotKeyThingy
 A suckless hot key daemon for X inspired by the suckless philosophy with configurable custom modes.
 
+~200 LOC. ~20KB binary.
 
 ## Installation
 Clone the repo and run
