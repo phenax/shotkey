@@ -1,5 +1,5 @@
 # HotKeyThingy
-Suckless X Hot key daemon inspired by the suckless philosophy.
+A suckless hot key daemon for X inspired by the suckless philosophy with configurable custom modes.
 
 
 ## Installation
