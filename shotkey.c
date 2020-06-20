@@ -48,11 +48,11 @@ void unbind_key(Display *dpy, Window win, unsigned int mod, KeySym key) {
 int error_handler(Display *disp, XErrorEvent *xe) {
   switch(xe->error_code) {
     case BadAccess:
-      printf("hotkeythingy: [BadAccess] Cant grab key binding. Already grabbed\n");
+      printf("shotkey: [BadAccess] Cant grab key binding. Already grabbed\n");
       return 0;
   }
 
-  printf("hotkeythingy: Something went wrong\n");
+  printf("shotkey: Something went wrong\n");
   return 1;
 }
 
@@ -60,7 +60,7 @@ void spawn(char** command) {
 	if (fork() == 0) {
 		setsid();
 		execve(command[0], command, environ);
-		fprintf(stderr, "hotkeythingy: execve %s", command[0]);
+		fprintf(stderr, "shotkey: execve %s", command[0]);
 		perror(" failed");
 		exit(0);
 	}

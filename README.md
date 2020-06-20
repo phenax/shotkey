@@ -1,5 +1,5 @@
-# HotKeyThingy
-A suckless hot key daemon for X inspired by the suckless philosophy with configurable custom modes.
+# SHotKey
+A Suckless Hot Key daemon for X inspired by the suckless philosophy with configurable custom modes.
 
 ~200 LOC. ~20KB binary.
 
@@ -12,6 +12,7 @@ sudo make install
 
 
 ## Configuring
+Fork this repo and configure it to your likings.
 You can edit `config.h` to configure key bindings.
 
 * `shell` - Configure the shell used for executing the commands

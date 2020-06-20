@@ -1,15 +1,15 @@
-# hotkeythingy - dynamic window manager
+# shotkey - Suckless hot key daemon
 # See LICENSE file for copyright and license details.
 
 include config.mk
 
-SRC = hotkeythingy.c
+SRC = shotkey.c
 OBJ = ${SRC:.c=.o}
 
-all: clean options hotkeythingy
+all: clean options shotkey
 
 options:
-	@echo hotkeythingy build options:
+	@echo shotkey build options:
 	@echo "CFLAGS   = ${CFLAGS}"
 	@echo "LDFLAGS  = ${LDFLAGS}"
 	@echo "CC       = ${CC}"
@@ -19,22 +19,22 @@ options:
 
 ${OBJ}: config.mk
 
-hotkeythingy: ${OBJ}
+shotkey: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
-	rm -f hotkeythingy ${OBJ}
+	rm -f shotkey ${OBJ}
 
 install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
-	cp -f hotkeythingy ${DESTDIR}${PREFIX}/bin
-	chmod 755 ${DESTDIR}${PREFIX}/bin/hotkeythingy
+	cp -f shotkey ${DESTDIR}${PREFIX}/bin
+	chmod 755 ${DESTDIR}${PREFIX}/bin/shotkey
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
-	sed "s/VERSION/${VERSION}/g" < hotkeythingy.1 > ${DESTDIR}${MANPREFIX}/man1/hotkeythingy.1
-	chmod 644 ${DESTDIR}${MANPREFIX}/man1/hotkeythingy.1
+	sed "s/VERSION/${VERSION}/g" < shotkey.1 > ${DESTDIR}${MANPREFIX}/man1/shotkey.1
+	chmod 644 ${DESTDIR}${MANPREFIX}/man1/shotkey.1
 
 uninstall:
-	rm -f ${DESTDIR}${PREFIX}/bin/hotkeythingy\
-		${DESTDIR}${MANPREFIX}/man1/hotkeythingy.1
+	rm -f ${DESTDIR}${PREFIX}/bin/shotkey\
+		${DESTDIR}${MANPREFIX}/man1/shotkey.1
 
 .PHONY: all options clean dist install uninstall
