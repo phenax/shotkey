@@ -1,7 +1,7 @@
 // Shell
 static char shell[] = "/bin/sh";
 
-#define Super Mod1Mask
+#define Super Mod4Mask
 
 enum {
   Music,
