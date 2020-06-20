@@ -21,6 +21,6 @@ You can edit `config.h` to configure key bindings.
 * `on_mode_change` - Hook script to listen to mode changes. Useful for status bar integration
 * `mode_properties` - Some meta information about mode. (Label is useful for `on_mode_change`)
 
-You can checkout the [personal branch](https://github.com/phenax/hotkeythingy/tree/personal) for my personal config.
+You can checkout the [personal branch](https://github.com/phenax/shotkey/tree/personal) for my personal config.
 
 Read the man page for more details.
