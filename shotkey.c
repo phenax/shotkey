@@ -77,10 +77,10 @@ void handle_mode_change() {
   char str[255];
 
   sprintf(str, "%d", current_mode);
-  setenv("MODE_ID", str, 1);
+  setenv("SHOTKEY_MODE_ID", str, 1);
 
   sprintf(str, "%s", get_mode_label());
-  setenv("MODE_LABEL", str, 1);
+  setenv("SHOTKEY_MODE_LABEL", str, 1);
 
   char* cmd[] = {shell, "-c", on_mode_change, NULL};
   spawn(cmd);

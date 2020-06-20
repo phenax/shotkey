@@ -36,5 +36,5 @@ static ModeProperties mode_properties[MODE_SIZE] = {
 };
 
 // Call this script on mode change
-static char* on_mode_change = "notify-send \"kadj [$MODE_ID] $MODE_LABEL\"";
+static char* on_mode_change = "notify-send \"kadj [$SHOTKEY_MODE_ID] $SHOTKEY_MODE_LABEL\"";
 
