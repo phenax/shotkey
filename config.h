@@ -73,5 +73,5 @@ static ModeProperties mode_properties[MODE_SIZE] = {
 };
 
 // Call this script on mode change
-static char* on_mode_change = "~/scripts/hotkeythingy.sh on-mode-change";
+static char* on_mode_change = "~/scripts/shotkey.sh on-mode-change";
 
