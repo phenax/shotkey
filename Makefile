@@ -17,7 +17,8 @@ options:
 .c.o:
 	${CC} -c ${CFLAGS} $<
 
-${OBJ}: config.mk
+config.h:
+	cp config.def.h config.h
 
 shotkey: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
