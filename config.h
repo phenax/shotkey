@@ -1,7 +1,7 @@
 #include <X11/XF86keysym.h>
 
 // Shell
-static char shell[] = "/bin/sh";
+char shell[] = "/bin/sh";
 
 #define Super Mod4Mask
 
@@ -16,7 +16,7 @@ enum {
 
 // Define mode key bindings here
 // NOTE: "10" here is the maximum number of key bindings for each mode
-static Key modes[MODE_SIZE][10] = {
+Key modes[MODE_SIZE][10] = {
   [MusicPlayer] = { // {{{
     { 0, XK_l,        SCRIPT(spotify.sh next) },
     { 0, XK_h,        SCRIPT(spotify.sh prev) },
@@ -25,7 +25,7 @@ static Key modes[MODE_SIZE][10] = {
 };
 
 // Define normal mode key bindings here
-static Key keys[] = {
+Key keys[] = {
   // Mod                        Key                          // Command
 
   // Application {{{
@@ -68,10 +68,10 @@ static Key keys[] = {
   // }}}
 };
 
-static ModeProperties mode_properties[MODE_SIZE] = {
+ModeProperties mode_properties[MODE_SIZE] = {
   [MusicPlayer] = { "Music player" },
 };
 
 // Call this script on mode change
-static char* on_mode_change = "~/scripts/shotkey.sh on-mode-change";
+char* on_mode_change = "~/scripts/shotkey.sh on-mode-change";
 

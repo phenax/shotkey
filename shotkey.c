@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-#include <unistd.h>
 
 typedef struct Command {
   char* command;
@@ -57,18 +56,21 @@ int error_handler(Display *disp, XErrorEvent *xe) {
 }
 
 void spawn(char** command) {
-	if (fork() == 0) {
-		setsid();
-		execve(command[0], command, environ);
-		fprintf(stderr, "shotkey: execve %s", command[0]);
-		perror(" failed");
-		exit(0);
-	}
+  if (fork() == 0) {
+    setsid();
+    execve(command[0], command, environ);
+    fprintf(stderr, "shotkey: execve %s", command[0]);
+    perror(" failed");
+    exit(0);
+  }
 }
 
 char* get_mode_label() {
-  if (current_mode == NormalMode) return "";
-  if (LENGTH(mode_properties) <= current_mode) return "";
+  if (current_mode == NormalMode)
+    return "";
+  if (LENGTH(mode_properties) <= current_mode) 
+    return "";
+
   ModeProperties props = mode_properties[current_mode];
   return props.label;
 }
@@ -99,7 +101,7 @@ void run(Display* dpy, Window win, Command command) {
   if (command.command) {
     char* cmd[] = {shell, "-c", command.command, NULL};
     spawn(cmd);
-  } else if(command.mode != NormalMode) {
+  } else if (command.mode != NormalMode) {
     // Bind keyboard for mode
     XGrabKeyboard(dpy, win, False, GrabModeAsync, GrabModeAsync, CurrentTime);
 
@@ -171,13 +173,13 @@ int main() {
 
   handle_mode_change();
 
-	/* main event loop */
+  /* main event loop */
   XEvent ev;
-	XSync(dpy, False);
-	while (running) {
+  XSync(dpy, False);
+  while (running) {
     XMaskEvent(dpy, KeyPressMask, &ev);
 
-	  switch (ev.type) {
+    switch (ev.type) {
       case KeyPress: {
         keypress(dpy, root, &ev.xkey);
         break;
@@ -185,6 +187,6 @@ int main() {
     }
   }
 
-	XCloseDisplay(dpy);
+  XCloseDisplay(dpy);
 }
 
