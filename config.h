@@ -61,7 +61,7 @@ Key keys[] = {
   { ControlMask|ShiftMask,      XK_l,                        SCRIPT(powercontrol.sh lock) },
   { 0,                          XF86XK_MonBrightnessUp,      SCRIPT(brightness.sh inc 10) },
   { 0,                          XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
-  { Super,                      XK_Print,                    mode(Screenshot, True) },
+  { Super,                      XK_Print,                    mode(Screenshot, False) },
   // }}}
 
   // Media controls {{{
