@@ -114,7 +114,7 @@ void run(Display* dpy, Window win, Command command) {
 }
 
 void keypress(Display *dpy, Window win, XKeyEvent *ev) {
-  unsigned int i;
+  unsigned int i, stay_in_mode = False;
   Key mode_key;
   KeySym keysym = XKeycodeToKeysym(dpy, (KeyCode) ev->keycode, 0);
 
@@ -126,8 +126,7 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
       }
     }
   } else {
-    // Will quit if the key pressed is not defined in the mode
-    is_mode_persistent = False;
+    stay_in_mode = False;
 
     if (modes[current_mode] && current_mode < LENGTH(modes)) {
       // Check if key is in mode and execute
@@ -136,12 +135,12 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
 
         if (keysym == mode_key.key && CLEANMASK(mode_key.mod) == CLEANMASK(ev->state)) {
           // Action taken so keep the mode alive
-          is_mode_persistent = True;
+          stay_in_mode = True;
           run(dpy, win, mode_key.command);
         }
       }
 
-      if (!is_mode_persistent) {
+      if (is_mode_persistent ? !stay_in_mode : True) {
         // Unbind mode related keys
         XUngrabKeyboard(dpy, CurrentTime);
 
@@ -150,7 +149,7 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
       }
     }
 
-    if (!is_mode_persistent) {
+    if (is_mode_persistent ? !stay_in_mode : True) {
       set_mode(NormalMode, False);
     }
   }
