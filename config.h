@@ -9,6 +9,7 @@ char shell[] = "/bin/sh";
 
 enum {
   MusicPlayer,
+  Screenshot,
 
   // Declare modes above this
   MODE_SIZE,
@@ -21,6 +22,11 @@ Key modes[MODE_SIZE][10] = {
     { 0, XK_l,        SCRIPT(spotify.sh next) },
     { 0, XK_h,        SCRIPT(spotify.sh prev) },
     { 0, XK_space,    SCRIPT(spotify.sh play_pause) },
+  },// }}}
+  [Screenshot] = { // {{{
+    { 0, XK_f,        SCRIPT(screenshot.sh full) },
+    { 0, XK_p,        SCRIPT(screenshot.sh part) },
+    { 0, XK_w,        SCRIPT(screenshot.sh window) },
   },// }}}
 };
 
@@ -55,8 +61,7 @@ Key keys[] = {
   { ControlMask|ShiftMask,      XK_l,                        SCRIPT(powercontrol.sh lock) },
   { 0,                          XF86XK_MonBrightnessUp,      SCRIPT(brightness.sh inc 10) },
   { 0,                          XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
-  { 0,                          XK_Print,                    SCRIPT(screenshot.sh full) },
-  { ControlMask,                XK_Print,                    SCRIPT(screenshot.sh part) },
+  { Super,                      XK_Print,                    mode(Screenshot, True) },
   // }}}
 
   // Media controls {{{
@@ -70,6 +75,7 @@ Key keys[] = {
 
 ModeProperties mode_properties[MODE_SIZE] = {
   [MusicPlayer] = { "Music player" },
+  [Screenshot] = { "Screeshot" },
 };
 
 // Call this script on mode change
