@@ -22,8 +22,8 @@ typedef struct ModeProperties {
 
 #define NormalMode -1
 
-#define cmd(c)      (Command) { c,     NormalMode,  False }
-#define mode(m, p)  (Command) { NULL,  m,           p }
+#define cmd(c)      { c,     NormalMode,  False }
+#define mode(m, p)  { NULL,  m,           p }
 
 #include "config.h"
 
@@ -95,9 +95,6 @@ void set_mode(int mode, unsigned int persist) {
 }
 
 void run(Display* dpy, Window win, Command command) {
-  Key mode_key;
-  unsigned int i;
-
   if (command.command) {
     char* cmd[] = {shell, "-c", command.command, NULL};
     spawn(cmd);
