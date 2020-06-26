@@ -6,6 +6,7 @@ char shell[] = "/bin/sh";
 #define Super Mod4Mask
 
 #define SCRIPT(str) cmd("~/scripts/" #str)
+#define NOOP cmd("")
 
 enum {
   MusicPlayer,
@@ -18,7 +19,7 @@ enum {
 
 // Define mode key bindings here
 // NOTE: "10" here is the maximum number of key bindings for each mode
-Key modes[MODE_SIZE][10] = {
+Key modes[MODE_SIZE][20] = {
   [MusicPlayer] = { // {{{
     { 0, XK_l,        SCRIPT(spotify.sh next) },
     { 0, XK_h,        SCRIPT(spotify.sh prev) },
@@ -30,14 +31,18 @@ Key modes[MODE_SIZE][10] = {
     { 0, XK_w,        SCRIPT(screenshot.sh window) },
   },// }}}
   [Mouse] = { // {{{
-    { 0, XK_h,        SCRIPT(mouse.sh move left 20) },
-    { 0, XK_j,        SCRIPT(mouse.sh move down 20) },
-    { 0, XK_k,        SCRIPT(mouse.sh move up 20) },
-    { 0, XK_l,        SCRIPT(mouse.sh move right 20) },
-    //{ 0, XK_h,        SCRIPT(mouse.sh move left 100) },
-    //{ 0, XK_j,        SCRIPT(mouse.sh move down 100) },
-    //{ 0, XK_k,        SCRIPT(mouse.sh move up 100) },
-    //{ 0, XK_l,        SCRIPT(mouse.sh move right 100) },
+    { 0, XK_h,           SCRIPT(mouse.sh move left 30) },
+    { 0, XK_j,           SCRIPT(mouse.sh move down 30) },
+    { 0, XK_k,           SCRIPT(mouse.sh move up 30) },
+    { 0, XK_l,           SCRIPT(mouse.sh move right 30) },
+
+    { 0, XK_Shift_L,   NOOP },
+    { 0, XK_Shift_R,   NOOP },
+    { ShiftMask, XK_h,        SCRIPT(mouse.sh move left 200) },
+    { ShiftMask, XK_j,        SCRIPT(mouse.sh move down 200) },
+    { ShiftMask, XK_k,        SCRIPT(mouse.sh move up 200) },
+    { ShiftMask, XK_l,        SCRIPT(mouse.sh move right 200) },
+
     { 0, XK_space,    SCRIPT(mouse.sh click) },
     { 0, XK_c,        SCRIPT(mouse.sh rclick) },
   },// }}}
