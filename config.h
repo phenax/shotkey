@@ -10,6 +10,7 @@ char shell[] = "/bin/sh";
 enum {
   MusicPlayer,
   Screenshot,
+  Mouse,
 
   // Declare modes above this
   MODE_SIZE,
@@ -27,6 +28,18 @@ Key modes[MODE_SIZE][10] = {
     { 0, XK_f,        SCRIPT(screenshot.sh full) },
     { 0, XK_p,        SCRIPT(screenshot.sh part) },
     { 0, XK_w,        SCRIPT(screenshot.sh window) },
+  },// }}}
+  [Mouse] = { // {{{
+    { 0, XK_h,        SCRIPT(mouse.sh move left 20) },
+    { 0, XK_j,        SCRIPT(mouse.sh move down 20) },
+    { 0, XK_k,        SCRIPT(mouse.sh move up 20) },
+    { 0, XK_l,        SCRIPT(mouse.sh move right 20) },
+    //{ 0, XK_h,        SCRIPT(mouse.sh move left 100) },
+    //{ 0, XK_j,        SCRIPT(mouse.sh move down 100) },
+    //{ 0, XK_k,        SCRIPT(mouse.sh move up 100) },
+    //{ 0, XK_l,        SCRIPT(mouse.sh move right 100) },
+    { 0, XK_space,    SCRIPT(mouse.sh click) },
+    { 0, XK_c,        SCRIPT(mouse.sh rclick) },
   },// }}}
 };
 
@@ -62,6 +75,7 @@ Key keys[] = {
   { 0,                          XF86XK_MonBrightnessUp,      SCRIPT(brightness.sh inc 10) },
   { 0,                          XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
   { Super,                      XK_Print,                    mode(Screenshot, False) },
+  { Super|ControlMask,          XK_m,                        mode(Mouse, True) },
   // }}}
 
   // Media controls {{{
@@ -76,6 +90,7 @@ Key keys[] = {
 ModeProperties mode_properties[MODE_SIZE] = {
   [MusicPlayer] = { "Music player" },
   [Screenshot] = { "Screeshot" },
+  [Mouse] = { "Mouse control" },
 };
 
 // Call this script on mode change
