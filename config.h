@@ -6,12 +6,14 @@ char shell[] = "/bin/sh";
 #define Super Mod4Mask
 
 #define SCRIPT(str) cmd("~/scripts/" #str)
+#define DWMLAYOUT(str) cmd("dwmc layout " #str)
 #define NOOP cmd("")
 
 enum {
   MusicPlayer,
   Screenshot,
   Mouse,
+  Layout,
 
   // Declare modes above this
   MODE_SIZE,
@@ -20,10 +22,17 @@ enum {
 // Define mode key bindings here
 // NOTE: "10" here is the maximum number of key bindings for each mode
 Key modes[MODE_SIZE][20] = {
+  [Layout] = {
+    { 0, XK_t,         DWMLAYOUT(vtile) },
+    { 0, XK_h,         DWMLAYOUT(htile) },
+    { 0, XK_g,         DWMLAYOUT(grid) },
+    { 0, XK_c,         DWMLAYOUT(centered) },
+    { 0, XK_d,         DWMLAYOUT(deck) },
+  },
   [MusicPlayer] = { // {{{
-    { 0, XK_l,        SCRIPT(spotify.sh next) },
-    { 0, XK_h,        SCRIPT(spotify.sh prev) },
-    { 0, XK_space,    SCRIPT(spotify.sh play_pause) },
+    { 0, XK_l,        SCRIPT(music/player.sh next) },
+    { 0, XK_h,        SCRIPT(music/player.sh prev) },
+    { 0, XK_space,    SCRIPT(music/player.sh play_pause) },
   },// }}}
   [Screenshot] = { // {{{
     { 0, XK_f,        SCRIPT(screenshot.sh full) },
@@ -81,6 +90,7 @@ Key keys[] = {
   { 0,                          XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
   { Super,                      XK_Print,                    mode(Screenshot, False) },
   { Super|ControlMask,          XK_m,                        mode(Mouse, True) },
+  { Super,                      XK_l,                        mode(Layout, False) },
   // }}}
 
   // Media controls {{{
@@ -96,6 +106,7 @@ ModeProperties mode_properties[MODE_SIZE] = {
   [MusicPlayer] = { "Music player" },
   [Screenshot] = { "Screeshot" },
   [Mouse] = { "Mouse control" },
+  [Layout] = { "Layout" },
 };
 
 // Call this script on mode change
