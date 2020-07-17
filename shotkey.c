@@ -44,6 +44,10 @@ void unbind_key(Display *dpy, Window win, unsigned int mod, KeySym key) {
   XUngrabKey(dpy, keycode, mod, win);
 }
 
+void bind_mouse_button(Display *dpy, Window win, unsigned int mod, KeySym button) {
+  XGrabButton(dpy, button, mod, win, False, ButtonPress, GrabModeSync, GrabModeAsync, None, None);
+}
+
 int error_handler(Display *disp, XErrorEvent *xe) {
   switch(xe->error_code) {
     case BadAccess:
@@ -152,6 +156,13 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
   }
 }
 
+void buttonpress(Display* dpy, Window win, XButtonEvent* ev) {
+  printf("Muse click\n");
+
+  // Replay event
+  XAllowEvents(dpy, ReplayPointer, CurrentTime);
+}
+
 int main() {
   XSetErrorHandler(error_handler);
 
@@ -165,7 +176,10 @@ int main() {
     bind_key(dpy, root, keys[i].mod, keys[i].key);
   }
 
-  XSelectInput(dpy, root, KeyPressMask);
+  bind_mouse_button(dpy, root, 0, Button1);
+
+  long int event_mask = KeyPressMask | ButtonPressMask;
+  XSelectInput(dpy, root, event_mask);
 
   handle_mode_change();
 
@@ -173,13 +187,15 @@ int main() {
   XEvent ev;
   XSync(dpy, False);
   while (running) {
-    XMaskEvent(dpy, KeyPressMask, &ev);
+    XMaskEvent(dpy, event_mask, &ev);
 
     switch (ev.type) {
-      case KeyPress: {
+      case KeyPress:
         keypress(dpy, root, &ev.xkey);
         break;
-      }
+      case ButtonPress:
+        buttonpress(dpy, root, &ev.xbutton);
+        break;
     }
   }
 
