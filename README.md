@@ -4,6 +4,9 @@ A Suckless Hot Key daemon for X inspired by the suckless philosophy with configu
 ~200 LOC. ~20KB binary.
 
 
+<a href="https://liberapay.com/phenax/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+
+
 ## Installation
 Clone the repo and run
 ```bash
