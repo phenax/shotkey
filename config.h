@@ -62,7 +62,8 @@ Key keys[] = {
   // Mod                        Key                          // Command
 
   // Application {{{
-  { Super,                      XK_Return,                   cmd("sensible-terminal -d $(xcwd || echo '~')") },
+  { Super,                      XK_Return,                   cmd("sensible-terminal -d $(xcwd)") },
+  { Super|ControlMask,          XK_Return,                   cmd("sensible-terminal") },
   { Super|ShiftMask,            XK_Return,                   cmd("~/.bin/tst -d $(xcwd)") },
 
   { Super,                      XK_c,                        cmd("sensible-browser") },
