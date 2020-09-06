@@ -3,7 +3,7 @@ A Suckless Hot Key daemon for X inspired by the suckless philosophy with configu
 
 ~200 LOC. ~20KB binary.
 
-<a href="https://www.buymeacoffee.com/phenax"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg" alt="Buy Me A Coffee donate button" /></a>
+<a href="https://www.buymeacoffee.com/phenax"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=flat-square" alt="Buy Me A Coffee donate button" /></a>
 
 
 ## Installation
