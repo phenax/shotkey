@@ -22,13 +22,12 @@ enum {
 // Define mode key bindings here
 // NOTE: "10" here is the maximum number of key bindings for each mode
 Key modes[MODE_SIZE][20] = {
-  [Layout] = {
+  [Layout] = { // {{{
     { 0, XK_t,         DWMLAYOUT(vtile) },
     { 0, XK_h,         DWMLAYOUT(htile) },
     { 0, XK_g,         DWMLAYOUT(grid) },
-    { 0, XK_c,         DWMLAYOUT(centered) },
     { 0, XK_d,         DWMLAYOUT(deck) },
-  },
+  }, // }}}
   [MusicPlayer] = { // {{{
     { 0, XK_l,        SCRIPT(music/player.sh next) },
     { 0, XK_h,        SCRIPT(music/player.sh prev) },
