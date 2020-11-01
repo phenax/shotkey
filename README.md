@@ -1,5 +1,5 @@
 # SHotKey
-A Suckless Hot Key daemon for X inspired by the suckless philosophy with configurable custom modes.
+A Simple Hot Key daemon for X inspired by the suckless philosophy with configurable custom modes.
 
 ~200 LOC. ~20KB binary.
 
