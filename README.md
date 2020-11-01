@@ -7,9 +7,9 @@ A Simple Hot Key daemon for X inspired by the suckless philosophy with configura
 
 
 ## Installation
-Clone the repo and run
+Clone the repo and run (May need `sudo`)
 ```bash
-sudo make install
+make install
 ```
 
 
