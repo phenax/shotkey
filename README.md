@@ -1,16 +1,15 @@
 # SHotKey
-A Suckless Hot Key daemon for X inspired by the suckless philosophy with configurable custom modes.
+A Simple Hot Key daemon for X inspired by the suckless philosophy with configurable custom modes.
 
 ~200 LOC. ~20KB binary.
 
-
-<a href="https://liberapay.com/phenax/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+<a href="https://www.buymeacoffee.com/phenax"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=flat-square" alt="Buy Me A Coffee donate button" /></a>
 
 
 ## Installation
-Clone the repo and run
+Clone the repo and run (May need `sudo`)
 ```bash
-sudo make install
+make install
 ```
 
 
