@@ -68,7 +68,7 @@ Key keys[] = {
   { Super,                      XK_c,                        cmd("sensible-browser") },
   { Super|ShiftMask,            XK_c,                        cmd("sensible-private-browser") },
 
-  { Super|ShiftMask,            XK_f,                        cmd("sensible-terminal -d $(xcwd) -e lf") },
+  { Super|ShiftMask,            XK_f,                        cmd("sensible-terminal -d $(xcwd) -e ~/dev/go/bin/lf") },
   // }}}
 
   // Menus {{{
