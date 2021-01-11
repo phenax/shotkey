@@ -68,7 +68,7 @@ Key keys[] = {
   { Super,                      XK_c,                        cmd("sensible-browser") },
   { Super|ShiftMask,            XK_c,                        cmd("sensible-private-browser") },
 
-  { Super|ShiftMask,            XK_f,                        cmd("sensible-terminal -d $(xcwd) -e ~/dev/go/bin/lf") },
+  { Super|ShiftMask,            XK_f,                        cmd("sensible-terminal -d $(xcwd) -e lf") },
   // }}}
 
   // Menus {{{
@@ -86,6 +86,7 @@ Key keys[] = {
 
   // System {{{
   { 0,                          XF86XK_PowerOff,             SCRIPT(powercontrol.sh menu) },
+  { ControlMask,                XK_Delete,                   SCRIPT(powercontrol.sh menu) },
   { ControlMask|ShiftMask,      XK_l,                        SCRIPT(powercontrol.sh lock) },
   { 0,                          XF86XK_MonBrightnessUp,      SCRIPT(brightness.sh inc 10) },
   { 0,                          XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
