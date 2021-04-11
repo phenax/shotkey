@@ -89,9 +89,9 @@ void handle_mode_change() {
 }
 
 void set_mode(int mode, unsigned int persist) {
-    current_mode = mode;
-    is_mode_persistent = persist;
-    handle_mode_change();
+  current_mode = mode;
+  is_mode_persistent = persist;
+  handle_mode_change();
 }
 
 void run(Display* dpy, Window win, Command command) {
