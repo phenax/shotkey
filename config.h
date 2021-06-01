@@ -76,7 +76,7 @@ Key keys[] = {
   { Super,                      XK_semicolon,                cmd("dmenu_run -it ':'") },
 
   { Super|ShiftMask,            XK_p,                        cmd("passmenu --type -p 'pass :: '") },
-  { Super|ShiftMask,            XK_t,                        SCRIPT(change-tagname.sh) },
+  // { Super|ShiftMask,            XK_t,                        SCRIPT(change-tagname.sh) },
   { Super|ShiftMask,            XK_o,                        SCRIPT(open-project.sh) },
   { Super|ShiftMask,            XK_i,                        SCRIPT(bookmarks-menu/bookmarker.sh menu) },
   { Super|ShiftMask,            XK_g,                        SCRIPT(bookmarks-menu/gh-projects.sh menu) },
@@ -92,7 +92,7 @@ Key keys[] = {
   { 0,                          XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
   { Super,                      XK_Print,                    mode(Screenshot, False) },
   { Super|ControlMask,          XK_m,                        mode(Mouse, True) },
-  { Super,                      XK_l,                        mode(Layout, False) },
+  //{ Super,                      XK_l,                        mode(Layout, False) },
   // }}}
 
   // Media controls {{{
