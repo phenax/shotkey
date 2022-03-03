@@ -102,6 +102,13 @@ Key keys[] = {
   { 0,                          XF86XK_AudioMute,            SCRIPT(sound.sh mute) },
   { 0,                          XF86XK_AudioMicMute,         SCRIPT(sound.sh mute-mic) },
   // }}}
+
+  // Notifications {{{
+  { ControlMask,              XK_space,                    cmd("dunstctl close") },
+  { ControlMask|ShiftMask,    XK_space,                    cmd("dunstctl close-all") },
+  { ControlMask|ShiftMask,    XK_period,                   cmd("dunstctl context") },
+  { ControlMask,              XK_grave,                    cmd("dunstctl history-pop") },
+  // }}}
 };
 
 ModeProperties mode_properties[MODE_SIZE] = {
