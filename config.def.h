@@ -34,6 +34,12 @@ Key keys[] = {
   { Mod1Mask,  XF86XK_PowerOff,  mode(Power, False) },
 };
 
+Button buttons[] = {
+  { Button1Mask, Button3, cmd("notify-send wow_1") },
+  { Mod1Mask, Button2, cmd("notify-send wow_2") },
+  { Mod1Mask, Button3, cmd("notify-send wow_3") },
+};
+
 ModeProperties mode_properties[MODE_SIZE] = {
   [Music] = { "Music player" },
   [Power] = { "Power menu" },

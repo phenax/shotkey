@@ -16,6 +16,12 @@ typedef struct Key {
   Command command;
 } Key;
 
+typedef struct Button {
+  unsigned int mod;
+  unsigned int button;
+  Command command;
+} Button;
+
 typedef struct ModeProperties {
   char* label;
 } ModeProperties;
@@ -28,7 +34,7 @@ typedef struct ModeProperties {
 #include "config.h"
 
 #define LENGTH(X) (sizeof X / sizeof X[0])
-#define CLEANMASK(mask) (mask & ~LockMask & (ShiftMask|ControlMask|Mod1Mask|Mod2Mask|Mod3Mask|Mod4Mask|Mod5Mask))
+#define CLEANMASK(mask) (mask & ~LockMask & (ShiftMask|ControlMask|Mod1Mask|Mod2Mask|Mod3Mask|Mod4Mask|Mod5Mask|Button1Mask|Button2Mask|Button3Mask|Button4Mask|Button5Mask))
 
 int current_mode = NormalMode;
 int is_mode_persistent = 0;
@@ -42,6 +48,10 @@ void bind_key(Display *dpy, Window win, unsigned int mod, KeySym key) {
 void unbind_key(Display *dpy, Window win, unsigned int mod, KeySym key) {
   int keycode = XKeysymToKeycode(dpy, key);
   XUngrabKey(dpy, keycode, mod, win);
+}
+
+void bind_mouse_button(Display *dpy, Window win, unsigned int mod, unsigned int button) {
+  XGrabButton(dpy, button, mod, win, False, ButtonPress, GrabModeSync, GrabModeAsync, None, None);
 }
 
 int error_handler(Display *disp, XErrorEvent *xe) {
@@ -152,10 +162,25 @@ void keypress(Display *dpy, Window win, XKeyEvent *ev) {
   }
 }
 
+void buttonpress(Display* dpy, Window win, XButtonEvent* ev) {
+  printf("Muse click\n");
+  int i;
+  short int should_forward_event = False;
+
+  for (i = 0; i < LENGTH(buttons); i++) {
+		if (buttons[i].button == ev->button && CLEANMASK(buttons[i].mod) == CLEANMASK(ev->state)) {
+      run(dpy, win, buttons[i].command);
+    }
+  }
+
+  // Replay event
+  XAllowEvents(dpy, should_forward_event ? ReplayPointer : SyncPointer, CurrentTime);
+}
+
 int main() {
   XSetErrorHandler(error_handler);
 
-  int running = 1, i = 0;
+  int running = True, i = 0;
 
   Display *dpy = XOpenDisplay(0);
   Window root = DefaultRootWindow(dpy);
@@ -165,7 +190,13 @@ int main() {
     bind_key(dpy, root, keys[i].mod, keys[i].key);
   }
 
-  XSelectInput(dpy, root, KeyPressMask);
+  // Grab mouse buttons
+  for (i = 0; i < LENGTH(buttons); i++) {
+    bind_mouse_button(dpy, root, buttons[i].mod, buttons[i].button);
+  }
+
+  long int event_mask = KeyPressMask | ButtonPressMask;
+  XSelectInput(dpy, root, event_mask);
 
   handle_mode_change();
 
@@ -173,13 +204,15 @@ int main() {
   XEvent ev;
   XSync(dpy, False);
   while (running) {
-    XMaskEvent(dpy, KeyPressMask, &ev);
+    XMaskEvent(dpy, event_mask, &ev);
 
     switch (ev.type) {
-      case KeyPress: {
+      case KeyPress:
         keypress(dpy, root, &ev.xkey);
         break;
-      }
+      case ButtonPress:
+        buttonpress(dpy, root, &ev.xbutton);
+        break;
     }
   }
 
