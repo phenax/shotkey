@@ -4,6 +4,7 @@
 char shell[] = "/bin/sh";
 
 #define Super Mod4Mask
+#define AltMask Mod1Mask
 
 #define SCRIPT(str) cmd("~/scripts/" #str)
 #define DWMLAYOUT(str) cmd("dwmc layout " #str)
@@ -96,11 +97,14 @@ Key keys[] = {
   // }}}
 
   // Media controls {{{
-  { Super,                      XK_m,                        mode(MusicPlayer, True) },
+  { Super|AltMask,              XK_m,                        mode(MusicPlayer, True) },
   { 0,                          XF86XK_AudioRaiseVolume,     SCRIPT(sound.sh volume up) },
   { 0,                          XF86XK_AudioLowerVolume,     SCRIPT(sound.sh volume down) },
   { 0,                          XF86XK_AudioMute,            SCRIPT(sound.sh mute) },
   { 0,                          XF86XK_AudioMicMute,         SCRIPT(sound.sh mute-mic) },
+  { 0,                          XF86XK_AudioNext,            SCRIPT(music/player.sh next) },
+  { 0,                          XF86XK_AudioPrev,            SCRIPT(music/player.sh prev) },
+  { 0,                          XF86XK_AudioPlay,            SCRIPT(music/player.sh play_pause) },
   // }}}
 
   // Notifications {{{
