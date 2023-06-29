@@ -93,6 +93,7 @@ Key keys[] = {
   { 0,                          XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
   { Super,                      XK_Print,                    mode(Screenshot, False) },
   { Super|ControlMask,          XK_m,                        mode(Mouse, True) },
+  // Ctrl+Click, { ControlMask|AltMask,        XK_Tab,                      cmd("xdotool keydown ctrl click 1 keyup ctrl") }
   //{ Super,                      XK_l,                        mode(Layout, False) },
   // }}}
 
