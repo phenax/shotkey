@@ -53,7 +53,7 @@ Key modes[MODE_SIZE][20] = {
     { ShiftMask, XK_l,        SCRIPT(mouse.sh move right 200) },
 
     { 0, XK_space,    SCRIPT(mouse.sh click) },
-    { 0, XK_c,        SCRIPT(mouse.sh rclick) },
+    // { 0, XK_c,        SCRIPT(mouse.sh rclick) },
   },// }}}
 };
 
@@ -63,11 +63,14 @@ Key keys[] = {
 
   // Application {{{
   { Super,                      XK_Return,                   cmd("sensible-terminal -d $(xcwd)") },
-  { Super|ControlMask,          XK_Return,                   cmd("sensible-terminal") },
-  { Super|ShiftMask,            XK_Return,                   cmd("~/.bin/tst -d $(xcwd)") },
+  // { Super|ControlMask,          XK_Return,                   cmd("sensible-terminal") },
+  // { Super|ShiftMask,            XK_Return,                   cmd("~/.bin/tst -d $(xcwd)") },
 
   { Super,                      XK_c,                        cmd("sensible-browser") },
   { Super|ShiftMask,            XK_c,                        cmd("sensible-private-browser") },
+  { Super,                      XK_b,                        cmd("sensible-browser") },
+  { Super|ShiftMask,            XK_b,                        cmd("sensible-private-browser") },
+  { Super|ControlMask,          XK_b,                        cmd("brave") },
 
   { Super|ShiftMask,            XK_f,                        cmd("sensible-terminal -d $(xcwd) -e lf") },
   // }}}
@@ -75,14 +78,13 @@ Key keys[] = {
   // Menus {{{
   { Super,                      XK_d,                        cmd("dmenu_run") },
   { Super,                      XK_semicolon,                cmd("dmenu_run -it ':'") },
+  { Super|ShiftMask,            XK_d,                        cmd("j4-dmenu-desktop") },
 
   { Super|ShiftMask,            XK_p,                        cmd("passmenu --type -p 'pass :: '") },
   // { Super|ShiftMask,            XK_t,                        SCRIPT(change-tagname.sh) },
   { Super|ShiftMask,            XK_o,                        SCRIPT(open-project.sh) },
-  { Super|ShiftMask,            XK_i,                        SCRIPT(bookmarks-menu/bookmarker.sh menu) },
-  { Super|ShiftMask,            XK_g,                        SCRIPT(bookmarks-menu/gh-projects.sh menu) },
+  // { Super|ShiftMask,            XK_i,                        SCRIPT(bookmarks-menu/bookmarker.sh menu) },
   { Super|ShiftMask,            XK_e,                        SCRIPT(fontawesome-menu/fa-menu.sh menu) },
-  { Super,                      XK_y,                        cmd("clipmenu") },
   // }}}
 
   // System {{{
@@ -92,7 +94,7 @@ Key keys[] = {
   { 0,                          XF86XK_MonBrightnessUp,      SCRIPT(brightness.sh inc 10) },
   { 0,                          XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
   { Super,                      XK_Print,                    mode(Screenshot, False) },
-  { Super|ControlMask,          XK_m,                        mode(Mouse, True) },
+  // { Super|ControlMask,          XK_m,                        mode(Mouse, True) },
   // Ctrl+Click, { ControlMask|AltMask,        XK_Tab,                      cmd("xdotool keydown ctrl click 1 keyup ctrl") }
   //{ Super,                      XK_l,                        mode(Layout, False) },
   // }}}
