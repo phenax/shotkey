@@ -68,8 +68,8 @@ Key keys[] = {
 
   { Super,                      XK_c,                        cmd("sensible-browser") },
   { Super|ShiftMask,            XK_c,                        cmd("sensible-private-browser") },
-  { Super,                      XK_b,                        cmd("sensible-browser") },
-  { Super|ShiftMask,            XK_b,                        cmd("sensible-private-browser") },
+  // { Super,                      XK_b,                        cmd("sensible-browser") },
+  // { Super|ShiftMask,            XK_b,                        cmd("sensible-private-browser") },
   { Super|ControlMask,          XK_b,                        cmd("brave") },
 
   { Super|ShiftMask,            XK_f,                        cmd("sensible-terminal -d $(xcwd) -e lf") },
