@@ -40,10 +40,10 @@ Key modes[MODE_SIZE][20] = {
     { 0, XK_w,        SCRIPT(screenshot.sh window) },
   },// }}}
   [Mouse] = { // {{{
-    { 0, XK_h,           SCRIPT(mouse.sh move left 30) },
-    { 0, XK_j,           SCRIPT(mouse.sh move down 30) },
-    { 0, XK_k,           SCRIPT(mouse.sh move up 30) },
-    { 0, XK_l,           SCRIPT(mouse.sh move right 30) },
+    { 0, XK_h,           SCRIPT(mouse.sh move left 16) },
+    { 0, XK_j,           SCRIPT(mouse.sh move down 16) },
+    { 0, XK_k,           SCRIPT(mouse.sh move up 16) },
+    { 0, XK_l,           SCRIPT(mouse.sh move right 16) },
 
     { 0, XK_Shift_L,   NOOP },
     { 0, XK_Shift_R,   NOOP },
@@ -53,7 +53,7 @@ Key modes[MODE_SIZE][20] = {
     { ShiftMask, XK_l,        SCRIPT(mouse.sh move right 200) },
 
     { 0, XK_space,    SCRIPT(mouse.sh click) },
-    // { 0, XK_c,        SCRIPT(mouse.sh rclick) },
+    { 0, XK_c,        SCRIPT(mouse.sh rclick) },
   },// }}}
 };
 
@@ -95,13 +95,13 @@ Key keys[] = {
   { 0,                          XF86XK_MonBrightnessUp,      SCRIPT(brightness.sh inc 10) },
   { 0,                          XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
   { Super,                      XK_Print,                    mode(Screenshot, False) },
-  // { Super|ControlMask,          XK_m,                        mode(Mouse, True) },
+  { Super|AltMask,              XK_m,                        mode(Mouse, True) },
   // Ctrl+Click, { ControlMask|AltMask,        XK_Tab,                      cmd("xdotool keydown ctrl click 1 keyup ctrl") }
   //{ Super,                      XK_l,                        mode(Layout, False) },
   // }}}
 
   // Media controls {{{
-  { Super|AltMask,              XK_m,                        mode(MusicPlayer, True) },
+  // { Super|AltMask,              XK_m,                        mode(MusicPlayer, True) },
   { 0,                          XF86XK_AudioRaiseVolume,     SCRIPT(sound.sh volume up) },
   { 0,                          XF86XK_AudioLowerVolume,     SCRIPT(sound.sh volume down) },
   { 0,                          XF86XK_AudioMute,            SCRIPT(sound.sh mute) },
