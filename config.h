@@ -89,13 +89,13 @@ Key keys[] = {
   // }}}
 
   // System {{{
-  { 0,                          XF86XK_PowerOff,             SCRIPT(powercontrol.sh menu) },
-  { ControlMask,                XK_Delete,                   SCRIPT(powercontrol.sh menu) },
-  { ControlMask|ShiftMask,      XK_l,                        SCRIPT(powercontrol.sh lock) },
-  { 0,                          XF86XK_MonBrightnessUp,      SCRIPT(brightness.sh inc 10) },
-  { 0,                          XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
-  { Super,                      XK_Print,                    mode(Screenshot, False) },
-  { Super|AltMask,              XK_m,                        mode(Mouse, True) },
+  { 0,                            XF86XK_PowerOff,             SCRIPT(powercontrol.sh menu) },
+  { ControlMask,                  XK_Delete,                   SCRIPT(powercontrol.sh menu) },
+  { Super|ControlMask|ShiftMask,  XK_l,                        SCRIPT(powercontrol.sh lock) },
+  { 0,                            XF86XK_MonBrightnessUp,      SCRIPT(brightness.sh inc 10) },
+  { 0,                            XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
+  { Super,                        XK_Print,                    mode(Screenshot, False) },
+  { Super|AltMask,                XK_m,                        mode(Mouse, True) },
   // Ctrl+Click, { ControlMask|AltMask,        XK_Tab,                      cmd("xdotool keydown ctrl click 1 keyup ctrl") }
   //{ Super,                      XK_l,                        mode(Layout, False) },
   // }}}
