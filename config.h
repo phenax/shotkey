@@ -61,46 +61,38 @@ Key modes[MODE_SIZE][20] = {
 Key keys[] = {
   // Mod                        Key                          // Command
 
-  // Application {{{
+  // Application
   { Super,                      XK_Return,                   cmd("sensible-terminal -d $(xcwd)") },
-  // { Super|ControlMask,          XK_Return,                   cmd("sensible-terminal") },
-  // { Super|ShiftMask,            XK_Return,                   cmd("~/.bin/tst -d $(xcwd)") },
 
-  { Super,                      XK_c,                        cmd("sensible-browser") },
-  { Super|ShiftMask,            XK_c,                        cmd("sensible-private-browser") },
-  // { Super,                      XK_b,                        cmd("sensible-browser") },
-  // { Super|ShiftMask,            XK_b,                        cmd("sensible-private-browser") },
+  { Super,                      XK_c,                        cmd("zsh -c sensible-browser") },
+  { Super|ShiftMask,            XK_c,                        cmd("zsh -c sensible-private-browser") },
   { Super,                      XK_b,                        cmd("firefox") },
   { Super|ControlMask,          XK_b,                        cmd("brave") },
 
   { Super|ShiftMask,            XK_f,                        cmd("sensible-terminal -d $(xcwd) -e lf") },
-  // }}}
 
-  // Menus {{{
+  // Menus
   { Super,                      XK_d,                        cmd("dmenu_run") },
   { Super,                      XK_semicolon,                cmd("dmenu_run -it ':'") },
   { Super|ShiftMask,            XK_d,                        cmd("j4-dmenu-desktop") },
 
   { Super|ShiftMask,            XK_p,                        cmd("passmenu --type -p 'pass :: '") },
-  // { Super|ShiftMask,            XK_t,                        SCRIPT(change-tagname.sh) },
   { Super|ShiftMask,            XK_o,                        SCRIPT(open-project.sh) },
-  // { Super|ShiftMask,            XK_i,                        SCRIPT(bookmarks-menu/bookmarker.sh menu) },
   { Super|ShiftMask,            XK_e,                        SCRIPT(fontawesome-menu/fa-menu.sh menu) },
-  // }}}
 
-  // System {{{
+  // System
   { 0,                            XF86XK_PowerOff,             SCRIPT(powercontrol.sh menu) },
   { ControlMask,                  XK_Delete,                   SCRIPT(powercontrol.sh menu) },
   { Super|ControlMask|ShiftMask,  XK_l,                        SCRIPT(powercontrol.sh lock) },
   { 0,                            XF86XK_MonBrightnessUp,      SCRIPT(brightness.sh inc 10) },
   { 0,                            XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
   { Super,                        XK_Print,                    mode(Screenshot, False) },
-  { Super|AltMask,                XK_m,                        mode(Mouse, True) },
-  // Ctrl+Click, { ControlMask|AltMask,        XK_Tab,                      cmd("xdotool keydown ctrl click 1 keyup ctrl") }
+  { Super|AltMask,                XK_m,                        cmd("chelleport") },
+  { Super|AltMask,                XK_s,                        cmd("chelleport -m search") },
+  { Super|AltMask,                XK_t,                        cmd("dsoys") },
   //{ Super,                      XK_l,                        mode(Layout, False) },
-  // }}}
 
-  // Media controls {{{
+  // Media controls
   // { Super|AltMask,              XK_m,                        mode(MusicPlayer, True) },
   { 0,                          XF86XK_AudioRaiseVolume,     SCRIPT(sound.sh volume up) },
   { 0,                          XF86XK_AudioLowerVolume,     SCRIPT(sound.sh volume down) },
@@ -109,14 +101,12 @@ Key keys[] = {
   { 0,                          XF86XK_AudioNext,            SCRIPT(music/player.sh next) },
   { 0,                          XF86XK_AudioPrev,            SCRIPT(music/player.sh prev) },
   { 0,                          XF86XK_AudioPlay,            SCRIPT(music/player.sh play_pause) },
-  // }}}
 
-  // Notifications {{{
+  // Notifications
   { ControlMask,              XK_space,                    cmd("dunstctl close") },
   { ControlMask|ShiftMask,    XK_space,                    cmd("dunstctl close-all") },
   { ControlMask|ShiftMask,    XK_period,                   cmd("dunstctl context") },
   { ControlMask,              XK_grave,                    cmd("dunstctl history-pop") },
-  // }}}
 };
 
 ModeProperties mode_properties[MODE_SIZE] = {
