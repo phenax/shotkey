@@ -66,8 +66,8 @@ Key keys[] = {
 
   { Super,                      XK_c,                        cmd("zsh -c sensible-browser") },
   { Super|ShiftMask,            XK_c,                        cmd("zsh -c sensible-private-browser") },
-  { Super,                      XK_b,                        cmd("firefox") },
-  { Super|ControlMask,          XK_b,                        cmd("brave") },
+  { Super,                      XK_b,                        cmd("brave") },
+  { Super|ControlMask,          XK_b,                        cmd("firefox") },
 
   { Super|ShiftMask,            XK_f,                        cmd("sensible-terminal -d $(xcwd) -e lf") },
 
