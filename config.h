@@ -7,14 +7,11 @@ char shell[] = "/bin/sh";
 #define AltMask Mod1Mask
 
 #define SCRIPT(str) cmd("~/scripts/" #str)
-#define DWMLAYOUT(str) cmd("dwmc layout " #str)
 #define NOOP cmd("")
 
 enum {
   MusicPlayer,
   Screenshot,
-  Mouse,
-  Layout,
 
   // Declare modes above this
   MODE_SIZE,
@@ -23,12 +20,6 @@ enum {
 // Define mode key bindings here
 // NOTE: "10" here is the maximum number of key bindings for each mode
 Key modes[MODE_SIZE][20] = {
-  [Layout] = { // {{{
-    { 0, XK_t,         DWMLAYOUT(vtile) },
-    { 0, XK_h,         DWMLAYOUT(htile) },
-    { 0, XK_g,         DWMLAYOUT(grid) },
-    { 0, XK_d,         DWMLAYOUT(deck) },
-  }, // }}}
   [MusicPlayer] = { // {{{
     { 0, XK_l,        SCRIPT(music/player.sh next) },
     { 0, XK_h,        SCRIPT(music/player.sh prev) },
@@ -38,22 +29,6 @@ Key modes[MODE_SIZE][20] = {
     { 0, XK_f,        SCRIPT(screenshot.sh full) },
     { 0, XK_p,        SCRIPT(screenshot.sh part) },
     { 0, XK_w,        SCRIPT(screenshot.sh window) },
-  },// }}}
-  [Mouse] = { // {{{
-    { 0, XK_h,           SCRIPT(mouse.sh move left 16) },
-    { 0, XK_j,           SCRIPT(mouse.sh move down 16) },
-    { 0, XK_k,           SCRIPT(mouse.sh move up 16) },
-    { 0, XK_l,           SCRIPT(mouse.sh move right 16) },
-
-    { 0, XK_Shift_L,   NOOP },
-    { 0, XK_Shift_R,   NOOP },
-    { ShiftMask, XK_h,        SCRIPT(mouse.sh move left 200) },
-    { ShiftMask, XK_j,        SCRIPT(mouse.sh move down 200) },
-    { ShiftMask, XK_k,        SCRIPT(mouse.sh move up 200) },
-    { ShiftMask, XK_l,        SCRIPT(mouse.sh move right 200) },
-
-    { 0, XK_space,    SCRIPT(mouse.sh click) },
-    { 0, XK_c,        SCRIPT(mouse.sh rclick) },
   },// }}}
 };
 
@@ -91,7 +66,6 @@ Key keys[] = {
   { Super|AltMask,                XK_m,                        cmd("chelleport") },
   { Super|AltMask,                XK_s,                        cmd("chelleport -m search") },
   { Super|AltMask,                XK_t,                        cmd("dsoys") },
-  //{ Super,                      XK_l,                        mode(Layout, False) },
 
   // Media controls
   // { Super|AltMask,              XK_m,                        mode(MusicPlayer, True) },
@@ -113,8 +87,6 @@ Key keys[] = {
 ModeProperties mode_properties[MODE_SIZE] = {
   [MusicPlayer] = { "Music player" },
   [Screenshot] = { "Screeshot" },
-  [Mouse] = { "Mouse control" },
-  [Layout] = { "Layout" },
 };
 
 // Call this script on mode change
