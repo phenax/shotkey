@@ -42,10 +42,10 @@ Key keys[] = {
   { Super,                      XK_c,                        cmd("zsh -c sensible-browser") },
   { Super|ShiftMask,            XK_c,                        cmd("zsh -c sensible-private-browser") },
   { Super,                      XK_b,                        cmd("brave") },
-  { Super|ControlMask,          XK_b,                        cmd("firefox") },
+  // { Super|ControlMask,          XK_b,                        cmd("firefox") },
   { Super|ControlMask,          XK_n,                        cmd("zsh -c null-browser") },
 
-  { Super|ShiftMask,            XK_f,                        cmd("sensible-terminal -d $(xcwd) -e lf") },
+  { Super|ShiftMask,            XK_f,                        cmd("sensible-terminal -d $(xcwd) -e daffm") },
 
   // Menus
   { Super,                      XK_d,                        cmd("dmenu_run") },
@@ -62,10 +62,10 @@ Key keys[] = {
   { Super|ControlMask|ShiftMask,  XK_l,                        SCRIPT(powercontrol.sh lock) },
   { 0,                            XF86XK_MonBrightnessUp,      SCRIPT(brightness.sh inc 10) },
   { 0,                            XF86XK_MonBrightnessDown,    SCRIPT(brightness.sh dec 10) },
-  { Super,                        XK_Print,                    mode(Screenshot, False) },
+  { 0,                            XK_Print,                    mode(Screenshot, False) },
   { Super|AltMask,                XK_m,                        cmd("chelleport") },
   { Super|AltMask,                XK_s,                        cmd("chelleport -m search") },
-  { Super|AltMask,                XK_t,                        cmd("dsoys") },
+  // { Super|AltMask,                XK_t,                        cmd("dsoys") },
 
   // Media controls
   // { Super|AltMask,              XK_m,                        mode(MusicPlayer, True) },
@@ -77,7 +77,7 @@ Key keys[] = {
   { 0,                          XF86XK_AudioPrev,            SCRIPT(music/player.sh prev) },
   { 0,                          XF86XK_AudioPlay,            SCRIPT(music/player.sh play_pause) },
 
-  // Notifications
+  // Notifications (figure out better keys)
   { ControlMask,              XK_space,                    cmd("dunstctl close") },
   { ControlMask|ShiftMask,    XK_space,                    cmd("dunstctl close-all") },
   { ControlMask|ShiftMask,    XK_period,                   cmd("dunstctl context") },
