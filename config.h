@@ -55,6 +55,7 @@ Key keys[] = {
   { Super|ShiftMask,            XK_p,                        cmd("passmenu --type -p 'pass :: '") },
   { Super|ShiftMask,            XK_o,                        SCRIPT(open-project.sh) },
   { Super|ShiftMask,            XK_e,                        SCRIPT(fontawesome-menu/fa-menu.sh menu) },
+  { Super|ShiftMask,            XK_y,                        cmd("clipmenu") },
 
   // System
   { 0,                            XF86XK_PowerOff,             SCRIPT(powercontrol.sh menu) },
